@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pokemon extends Model
 {
+
+    protected $fillable = [
+        'race', 'user'
+    ];
+
+
     /**
      * 一对多反向 宝可梦与用户
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -21,6 +27,6 @@ class Pokemon extends Model
      */
     public function races()
     {
-        return $this->belongsTo('App\Race');
+        return $this->belongsTo('App\Race','race');
     }
 }

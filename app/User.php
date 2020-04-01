@@ -37,12 +37,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    protected $attributes = [
+        'coin' => 10,
+    ];
+
     /**
      * 一对多 用户与宝可梦
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function pokemons()
+    public function pokemon()
     {
-        return $this->hasMany('App\Pokemon');
+        return $this->hasMany('App\Pokemon','user');
     }
 }
