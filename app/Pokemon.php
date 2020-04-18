@@ -8,7 +8,7 @@ class Pokemon extends Model
 {
 
     protected $fillable = [
-        'race', 'user'
+        'race', 'user','name','nature','level'
     ];
 
 
@@ -28,5 +28,11 @@ class Pokemon extends Model
     public function races()
     {
         return $this->belongsTo('App\Race','race');
+    }
+
+
+    public function getNameAttribute($value)
+    {
+        return isset($value)?$value:$this->races->name;
     }
 }

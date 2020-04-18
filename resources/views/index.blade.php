@@ -1,8 +1,7 @@
 ﻿@extends('layouts.app')
 
 @section('content')
-    <div class="layui-main">
-        <div class="layui-row  layui-col-space20">
+    <div class="layui-row  layui-col-space20">
         
 
             <!-- 左侧 -->
@@ -11,6 +10,7 @@
                 <div class="layui-row">
                     <div class="layui-carousel" id="carousel">
                         <div carousel-item>
+                            <div><img src="/images/index3.jpeg" height="100%" width="100%"></div>
                             <div><img src="/images/index1.jpeg" height="100%" width="100%"></div>
                             <div><img src="/images/index2.jpg" height="100%" width="100%"></div>
                         </div>
@@ -19,7 +19,7 @@
 
                 <div class="layui-row" style="color:blanchedalmond;background-color:rgb(113, 156, 212)">
                     <div class="layui-col-md4">
-                        <img src="/images/PokeBall.png" height="95%" width="95%">
+                        <img src="/images/logo.png" height="95%" width="95%">
                     </div>
 
                     <!-- 抽奖按钮 -->
@@ -61,15 +61,17 @@
                                 <div class="layui-card">
                                     <div class="layui-card-header">
                                         @if(isset($pokemon[$i]))
-                                        {{$pokemon[$i]['race']['name']}}
+                                        {{$pokemon[$i]['name']}}
                                         @endif
                                     </div>
                                     <div class="layui-card-body">
                                         @if(isset($pokemon[$i]))
-                                        <img src="{{$pokemon[$i]['race']->image_url}}" height="80" width="80">
-                                        @else
-                                        <img src="images/pokemon/Null.png" height="80" width="80">
-                                        @endif
+                                            <a href="/pokemon/{{$pokemon[$i]->id}}">
+                                                <img src="{{$pokemon[$i]->races->image_url}}" height="80" width="80">
+                                            </a>
+                                            @else
+                                        <img src="images/Null.png" height="80" width="80">
+                                        @endif  
                                         
                                     </div>
                                 </div>
@@ -83,9 +85,10 @@
                     <div class="layui-card-body">
                         <div id="page" style="text-align: center">{{ $pokemon->links() }}</div>  
                     </div>
+                </div>
             </div>
             <!-- 宝可梦收藏end -->    
-        </div>
+    
     </div>
 
     <script>
@@ -99,12 +102,8 @@
             $.ajax({
                 url:'/extract',
                 type:'post', 
-                data:{
-                id:'{{Auth::id()}}',
-            
-                },
                 success:function(p) {
-                    if(p['suc']>0){
+                    if(p['suc']){
                         layer.open({
                             title:p['race']['name'],
                             content: "<img src=storage/"+p['race']['image']+" height='100' width='100'>恭喜你获得了"+p['race']['name'],
@@ -156,9 +155,7 @@
     });
     
     
-    $.ajaxSetup({
-        headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
-    });
+    
 </script>
 @endsection
 

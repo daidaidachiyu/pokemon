@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Race;
+use App\Pror;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -10,7 +10,7 @@ use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
 
-class RacesController extends Controller
+class ProrsController extends Controller
 {
     use HasResourceActions;
 
@@ -79,18 +79,15 @@ class RacesController extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new Race);
+        $grid = new Grid(new Pror);
 
-        $grid->name('名称');
-        $grid->rarity('稀有度');
-        $grid->type_one('属性')->display(function ($type) {
-            return isset($type)?config("system.type.$type"):"无";
-        });
-        $grid->type_two('第二属性')->display(function ($type) {
-            return isset($type)?config("system.type.$type"):"无";
-        });
-
-
+        $grid->id('Id');
+        $grid->name('Name');
+        $grid->effect('Effect');
+        $grid->image('Image');
+        $grid->explain('Explain');
+        $grid->created_at('Created at');
+        $grid->updated_at('Updated at');
 
         return $grid;
     }
@@ -103,17 +100,13 @@ class RacesController extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(Race::findOrFail($id));
+        $show = new Show(Pror::findOrFail($id));
 
-        $show->name('名称');
-        $show->image('形象')->image();
-        $show->rarity('稀有度');
-        $show->type_one('属性')->as(function ($type) {
-            return isset($type)?config("system.type.$type"):"无";
-        });
-        $show->type_two('第二属性')->as(function ($type) {
-            return isset($type)?config("system.type.$type"):"无";
-        });
+        $show->id('Id');
+        $show->name('Name');
+        $show->effect('Effect');
+        $show->image('Image');
+        $show->explain('Explain');
         $show->created_at('Created at');
         $show->updated_at('Updated at');
 
@@ -127,24 +120,12 @@ class RacesController extends Controller
      */
     protected function form()
     {
-        $form = new Form(new Race);
-        $form->text('name', '名称')->required();
+        $form = new Form(new Pror);
+
+        $form->text('name', '道具名');
+        $form->number('effect', '效果号');
         $form->image('image', '形象');
-        $form->number('rarity', '稀有度')->required()->value(0);
-        $form->select('type_one' ,'属性')->required()->options(config('system.type'));
-        $form->select('type_two' ,'第二属性')->options(config('system.type'));
-        $form->hasMany('evolves','进化', function (Form\NestedForm $form) {
-            $races = Race::get();
-            $arr = [];
-            foreach ($races as $race){
-                $arr += $race->id_name;
-            }
-            $form->select('after' ,'进化')->required()->options($arr);
-
-            $form->select('type', '进化类型')->required()->options(['升级进化','道具进化']);
-
-            $form->text('mode', '进化方式')->required()->help('升级进化则输入等级，道具进化则输入道具效果号');
-        });
+        $form->text('explain', '描述');
 
         return $form;
     }

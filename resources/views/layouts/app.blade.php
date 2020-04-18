@@ -8,8 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <link href="images/logo.ico" rel="icon" type="image/x-ico">
 
     <link rel="stylesheet" href="../layui/css/layui.css">
+    <link rel="stylesheet" href="../css/type.css">
+    <link rel="stylesheet" href="../css/rainbow.css">
     <script src="../layui/layui.all.js"></script>
     <script src="../layui/layui.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -20,16 +23,11 @@
 <body>
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header">
-            <div class="layui-logo">POKEMON</div>
+            <div class="layui-logo"><a style="color:#eee" href="/"><img src="/images/logo.png" class="layui-nav-img">POKEMON</a></div>
             <ul class="layui-nav layui-layout-right" lay-filter="" id="element">
-                <li class="layui-nav-item"><a href="">最新活动</a></li>
-                <li class="layui-nav-item layui-this"><a href="">产品</a></li>
-                <li class="layui-nav-item"><a href="">大数据</a></li>
                 <li class="layui-nav-item" lay-unselect="">
-                <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">{{ Auth::user()->name }}</a>
+                <a href="javascript:;"><img src="/images/logo.png" class="layui-nav-img">{{ Auth::user()->name }}</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="javascript:;">修改信息</a></dd>
-                    <dd><a href="javascript:;">安全管理</a></dd>
                     <dd><a id="logout" href="#"
                         onclick="event.preventDefault();document.getElementById('logout-form').submit();">退了</a></dd>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -41,13 +39,18 @@
         </div>
     </div>
                 
-        
-    @yield('content')
+    <div class="layui-main">
+        @yield('content')
+    </div>
 </body>
 <script>
     layui.use('element', function(){
         var element = layui.element;
         
+    });
+
+    $.ajaxSetup({
+        headers: { 'X-CSRF-TOKEN' : '{{ csrf_token() }}' }
     });
 </script>
 

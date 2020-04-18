@@ -30,10 +30,8 @@ class HomeController extends Controller
     {
         $user = User::find(Auth::id());
         $pokemon = Pokemon::where('user',Auth::id())->paginate(12);
-        foreach ($pokemon as $index => $pm){
-            $pokemon[$index]["race"] = $pm->races;
-        }
-        return view('layouts.index',['coin'=>$user->coin,'pokemon'=>$pokemon]);
+
+        return view('index',['coin'=>$user->coin,'pokemon'=>$pokemon]);
     }
 
 

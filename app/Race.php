@@ -18,7 +18,16 @@ class Race extends Model
      */
     public function pokemon()
     {
-        return $this->hasMany('App\Pokemon');
+        return $this->hasMany('App\Pokemon','race');
+    }
+
+    /**
+     * 一对多 种族与进化
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function evolves()
+    {
+        return $this->hasMany('App\Evolve','ago');
     }
 
     public function getImageUrlAttribute(){
@@ -26,6 +35,12 @@ class Race extends Model
             return $this->attributes['image'];
         }
         return \Storage::disk('public')->url($this->attributes['image']);
+    }
+
+
+    public function getIdNameAttribute()
+    {
+        return [$this->id => $this->name];
     }
 
 }

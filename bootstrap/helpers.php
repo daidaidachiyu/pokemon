@@ -1,7 +1,7 @@
 <?php
 function dice() {
     $p = rand(0,99);
-    if($p<60){
+    if($p<70){
         return 1;
     }else if($p<90){
         return 2;
@@ -11,3 +11,5 @@ function dice() {
         return 4;
     }
 }
+
+

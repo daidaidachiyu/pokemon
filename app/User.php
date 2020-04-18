@@ -39,7 +39,7 @@ class User extends Authenticatable
 
 
     protected $attributes = [
-        'coin' => 10,
+        'coin' => 100,
     ];
 
     /**
