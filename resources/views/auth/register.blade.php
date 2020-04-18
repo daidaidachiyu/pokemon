@@ -101,7 +101,7 @@
 			                        	<input type="password" name="password_confirmation" placeholder="确认密码..." class="form-password form-control" required autocomplete="new-password" id="password-confirm">
 
                                     </div>
-                                    <button type="submit" class="btn">登录!</button>
+                                    <button type="submit" class="btn">注册并登录!</button>
 
 
 
